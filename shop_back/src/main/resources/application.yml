@@ -1,0 +1,27 @@
+server:
+  port: 8081
+spring:
+  thymeleaf:
+    cache: false
+    mode: HTML5
+dubbo:
+  application:
+    name: shop_back
+  registry:
+    address: 192.168.230.128
+    protocol: zookeeper
+    port: 2181
+  consumer:
+    check: false
+    retries: 10
+    timeout: 10000
+fdfs:
+  connect-timeout: 60
+  pool:
+    jmx-enabled: false
+  thumb-image:
+    width: 200
+    height: 200
+  tracker-list: 192.168.230.128:22122
+image:
+  path: http://192.168.230.128/
