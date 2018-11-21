@@ -14,4 +14,6 @@ public interface IGoodsDao {
     List<Goods> queryAll();
 
     int addGoods(Goods goods);
+
+    List<Goods> queryNewGoods();
 }

@@ -14,4 +14,6 @@ public interface IGoodsService {
     List<Goods> queryAll();
 
     Goods addGoods(Goods goods);
+
+    List<Goods> queryNewGoods();
 }

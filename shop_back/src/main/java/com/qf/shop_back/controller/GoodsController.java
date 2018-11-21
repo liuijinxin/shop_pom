@@ -3,13 +3,17 @@ package com.qf.shop_back.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.github.tobato.fastdfs.domain.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
+import com.google.gson.Gson;
 import com.qf.entity.Goods;
 import com.qf.service.IGoodsService;
+import com.qf.utils.HttpClientUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -50,8 +54,27 @@ public class GoodsController {
                 "jpg", null);
         String fullPath = path.getFullPath();
         goods.setGimage(fullPath);
-        goodsService.addGoods(goods);
+        goods = goodsService.addGoods(goods);
+        System.out.println(goods);
+        HttpClientUtil.sendJson("http://localhost:8083/search/add", new Gson().toJson(goods));
         return "redirect:/goods/list";
     }
+
+    /*@RequestMapping("/newlist")
+    @ResponseBody
+    public String queryNewGoods(boolean flag){
+        List<Goods> goodsList= goodsService.queryNewGoods();
+        System.out.println(goodsList);
+        return flag ? "hello("+new Gson().toJson(goodsList) +")" : new Gson().toJson(goodsList);
+    }*/
+
+    @RequestMapping("/newlist")
+    @ResponseBody
+    @CrossOrigin
+    public List<Goods> queryNewGoods(){
+        List<Goods> goodsList= goodsService.queryNewGoods();
+        return goodsList;
+    }
+
 
 }

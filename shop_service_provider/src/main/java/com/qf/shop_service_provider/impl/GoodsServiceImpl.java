@@ -29,4 +29,9 @@ public class GoodsServiceImpl implements IGoodsService {
         goodsDao.addGoods(goods);
         return goods;
     }
+
+    @Override
+    public List<Goods> queryNewGoods() {
+        return goodsDao.queryNewGoods();
+    }
 }

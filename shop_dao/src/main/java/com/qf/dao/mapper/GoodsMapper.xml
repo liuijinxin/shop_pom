@@ -3,11 +3,27 @@
 <mapper namespace="com.qf.dao.IGoodsDao" >
 
   <select id="queryAll" resultType="com.qf.entity.Goods">
-    select * from goods
+    SELECT
+        *
+    FROM
+        goods
   </select>
 
   <insert id="addGoods" useGeneratedKeys="true" keyProperty="id">
-    insert into goods value(null, #{title}, #{ginfo}, #{gcount}, #{tid}, #{allprice}, #{price}, #{gimage})
+    insert into
+      goods
+    value
+      (null, #{title}, #{ginfo}, #{gcount}, #{tid}, #{allprice}, #{price}, #{gimage})
   </insert>
+
+  <select id="queryNewGoods" resultType="com.qf.entity.Goods">
+    SELECT
+        *
+    FROM
+        goods
+    ORDER BY
+        id DESC
+    LIMIT 4
+  </select>
 
 </mapper>
