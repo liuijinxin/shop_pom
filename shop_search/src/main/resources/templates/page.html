@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="pagination" th:inline="text" th:fragment="mypage">
+        <ul><li th:if="${pageSolr.page == 1}"><span>首页</span></li>
+            <li th:if="${pageSolr.page == 1}"><span>上一页</span></li>
+            <li th:unless="${pageSolr.page == 1}"><span><a th:href="${'/search/listPage?keyword=' + keyword + '&page=' + 1}">首页</a></span></li>
+            <li th:unless="${pageSolr.page == 1}"><span><a th:href="${'/search/listPage?keyword=' + keyword + '&page=' + (pageSolr.page - 1)}">上一页</a></span></li>
+
+            <li th:each="index : ${pageSolr.indexs}">
+                <span th:if="${pageSolr.page == index}" class="currentpage">
+                    <a th:href="${'/search/listPage?keyword=' + keyword + '&page=' + index}" th:text="${index}">1</a>
+                </span>
+                <span th:unless="${pageSolr.page == index}">
+                    <a th:href="${'/search/listPage?keyword=' + keyword + '&page=' + index}" th:text="${index}">1</a>
+                </span>
+            </li>
+
+            <li th:if="${pageSolr.page == pageSolr.pageSum}"><span>下一页</span></li>
+            <li th:if="${pageSolr.page == pageSolr.pageSum}"><span>末页</span></li>
+            <li th:unless="${pageSolr.page == pageSolr.pageSum }"><span><a th:href="${'/search/listPage?keyword=' + keyword + '&page=' + (pageSolr.page + 1)}">下一页</a></span></li>
+            <li th:unless="${pageSolr.page == pageSolr.pageSum }"><span><a th:href="${'/search/listPage?keyword=' + keyword + '&page=' + pageSolr.pageSum}">尾页</a></span></li>
+            <li>当前第[[${pageSolr.page}]]页/共[[${pageSolr.pageSum}]]页</li>
+        </ul>
+    </div>
+</body>
+</html>

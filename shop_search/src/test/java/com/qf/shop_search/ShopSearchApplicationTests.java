@@ -49,12 +49,12 @@ public class ShopSearchApplicationTests {
     @Test
     public void testUpdate() throws IOException, SolrServerException {
         SolrInputDocument document=new SolrInputDocument();
-        document.addField("id",0);
+        document.addField("id",20);
         document.addField("gtitle","华为手机");
-        document.addField("ginfo","实用的电器产品");
-        document.addField("gcount",1500);
-        document.addField("gprice",1999);
-        document.addField("gimage","www.baidu123.com");
+        document.addField("ginfo","好手机，选华为");
+        document.addField("gcount",2562);
+        document.addField("gprice",2100.0);
+        document.addField("gimage","group1/M00/00/00/wKjmgFv1SPqACP53AACNukNaZ2o980.jpg");
         solrClient.add(document);
         solrClient.commit();
     }
@@ -75,7 +75,7 @@ public class ShopSearchApplicationTests {
     @Test
     public void testQuery() throws IOException, SolrServerException {
         SolrQuery solrQuery=new SolrQuery();
-        solrQuery.setQuery("gtitle:美的冰箱 || ginfo:电器");
+        solrQuery.setQuery("gtitle:格力空调 || ginfo:格力");
 
         QueryResponse response = solrClient.query(solrQuery);
         SolrDocumentList results = response.getResults();

@@ -39,7 +39,6 @@ public class GoodsController {
 
     @RequestMapping("/list")
     public String querylAll(Model model){
-        System.out.println("GoodsController.querylAll");
         List<Goods> goodsList = goodsService.queryAll();
         model.addAttribute("path",spath);
         model.addAttribute("goodsList",goodsList);
@@ -55,8 +54,8 @@ public class GoodsController {
         String fullPath = path.getFullPath();
         goods.setGimage(fullPath);
         goods = goodsService.addGoods(goods);
-        System.out.println(goods);
         HttpClientUtil.sendJson("http://localhost:8083/search/add", new Gson().toJson(goods));
+        HttpClientUtil.sendJson("http://localhost:8084/item/createHtml", new Gson().toJson(goods));
         return "redirect:/goods/list";
     }
 

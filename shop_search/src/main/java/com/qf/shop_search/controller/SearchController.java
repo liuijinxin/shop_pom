@@ -2,12 +2,16 @@ package com.qf.shop_search.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.qf.entity.Goods;
+import com.qf.entity.PageSolr;
 import com.qf.service.ISearchService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * @author LJX
@@ -27,13 +31,28 @@ public class SearchController {
     @RequestMapping("/add")
     @ResponseBody
     public String add(@RequestBody Goods goods){
-        System.out.println(goods);
         int i = searchService.addIndex(goods);
-        System.out.println(i);
         if ( i==1 ){
             return "succ";
         }
         return "error";
+    }
+
+    @RequestMapping("/list")
+    public String queryIndex(String keyword, Model model) {
+        List<Goods> goodsList = searchService.queryIndex(keyword);
+        model.addAttribute("goodsList",goodsList);
+        model.addAttribute("path",spath);
+        return "searchlist";
+    }
+
+    @RequestMapping("/listPage")
+    public String queryIndexPage(String keyword, Model model, PageSolr<Goods> pageSolr) {
+        pageSolr = searchService.queryIndexPage(keyword, pageSolr);
+        model.addAttribute("pageSolr",pageSolr);
+        model.addAttribute("keyword",keyword);
+        model.addAttribute("path",spath);
+        return "searchlist";
     }
 
 }
